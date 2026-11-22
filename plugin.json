@@ -1,0 +1,11 @@
+{
+  "name": "ml-research-kit",
+  "displayName": "ML Research Kit",
+  "version": "1.1.0",
+  "description": "Personal ML systems research workflow: team PR/conflict radar, pre-registered PASS/FAIL/INCONCLUSIVE gates, isolated skeptic review, branch isolation, and factual reporting from raw JSON.",
+  "suggestedPrompts": [
+    "Check team PR overlap and merge-tree conflicts for our current branch",
+    "Design a pre-registered 1-day GPU gate experiment and run an isolated skeptic review",
+    "Research a new ML systems paper or kernel with first-principles Roofline and counterexamples"
+  ]
+}
