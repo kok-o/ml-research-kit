@@ -1,11 +1,11 @@
 {
   "name": "ml-research-kit",
   "displayName": "ML Research Kit",
-  "version": "1.2.0",
-  "description": "Review machine learning papers, design reproducible experiments, and evaluate benchmark results with the ml-research skill and optional team repository rules.",
+  "version": "1.3.0",
+  "description": "Investigate questions across sources with research, or design machine learning experiments and evaluate benchmark results with ml-research.",
   "suggestedPrompts": [
     "Check team PR overlap and merge-tree conflicts for our current branch",
     "Design a pre-registered 1-day GPU gate experiment and run an isolated skeptic review",
-    "Research a new ML systems paper or kernel with first-principles Roofline and counterexamples"
+    "Compare the sources behind a disputed claim and explain what would change the conclusion"
   ]
 }

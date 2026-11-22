@@ -1,9 +1,10 @@
 ---
 name: ml-research
 description: >-
-  Evaluate machine learning papers and performance claims, design GPU benchmarks or fine-tuning
-  experiments, and interpret learning curves, model quality, speed, or memory from raw results.
-  Also use when checking overlapping pull requests before integrating ML changes in a shared repository.
+  Review machine learning papers, design or run training experiments and GPU benchmarks,
+  audit learning curves and benchmark scores from raw logs or JSON, and check branch or
+  pull-request overlap when integrating ML code. Use for questions about model quality,
+  training speed, or memory on a specific workload.
 ---
 
 # ML Research & Experiment Workflow
