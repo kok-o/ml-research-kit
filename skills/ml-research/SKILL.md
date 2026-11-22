@@ -1,21 +1,25 @@
 ---
 name: ml-research
 description: >-
-  Use for ML research in Soup and similar training repositories. Evaluate ML papers and kernel
-  optimizations, design GPU benchmarks or fine-tuning experiments, audit overlapping PRs before
-  an integration, and interpret learning curves, quality, speed, or memory from raw measurements.
+  Evaluate machine learning papers and performance claims, design GPU benchmarks or fine-tuning
+  experiments, and interpret learning curves, model quality, speed, or memory from raw results.
+  Also use when checking overlapping pull requests before integrating ML changes in a shared repository.
 ---
 
 # ML Research & Experiment Workflow
 
 Use the steps relevant to the requested decision. For an existing experiment, start with its
 raw measurements and scoring code. For an integration, start with the target paths and branches.
-Keep each conclusion tied to an inspected source, a measurement, or a calculation.
+For a paper review, find the experiment behind the claim. Identify the comparison method,
+metric, and workload, then explain which differences matter for the user's question. Use the
+paper and any available implementation or data. Propose a replication only if it would change
+the decision. Keep each conclusion tied to an inspected source, a measurement, or a calculation.
 
 ## Step 1: Align With the Team Before Writing Code
 
-Before changing shared code, run the team radar from the directory containing this SKILL.md.
-Pass the absolute path of the worktree under review.
+When changing shared code on GitHub, run the optional team radar from the directory containing
+this SKILL.md. It assumes a base of `origin/main`. For another host or base, use the project's
+own Git and review tools to check the same files. Pass the absolute path of the worktree to the radar.
 
 ```bash
 python scripts/team_radar.py --repo "<absolute_repo_path>" --paths "<comma_separated_target_paths>" --fetch
@@ -84,4 +88,5 @@ Before any paid GPU rental, Kaggle run >15 min, code change >100 lines, or multi
 ### Report & Decision
 - Read [references/report_template.md](./references/report_template.md) before writing any team report.
 - **Zero-memory-quoting rule:** read the raw JSON/log file immediately before putting any metric, error message, or file path into a report.
-- Always include an honest **"Limitations, bugs, and caveats"** section and end with an explicit verdict (`PASS`, `FAIL`, or `INCONCLUSIVE`) and the next concrete decision it unlocks.
+- For a benchmark, report its limitations, the verdict under the agreed thresholds, and the next decision.
+  For a paper review, state which claims the evidence supports and what remains uncertain.

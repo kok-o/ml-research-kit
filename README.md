@@ -1,53 +1,37 @@
 # ML Research Kit
 
-Скилл для исследовательских задач в Soup и других репозиториях обучения моделей.
-Он помогает спланировать эксперимент, проверить пересечения с работой команды
-и принять решение по сырым метрикам. Codex и Antigravity используют один
-[SKILL.md](skills/ml-research/SKILL.md).
+**`ml-research`** is a standalone agent skill for reviewing machine learning papers, designing experiments, and interpreting benchmark results. Use it when a decision depends on a measurement, such as whether an optimizer reaches the same validation loss in less training time.
 
-## Codex
+## Install
 
-Клонируйте репозиторий и выполните из его корня в PowerShell:
-
-```powershell
-$skill = (Get-Item -LiteralPath 'skills/ml-research').FullName
-$skillsDir = Join-Path $env:USERPROFILE '.agents/skills'
-New-Item -ItemType Directory -Force -Path $skillsDir | Out-Null
-New-Item -ItemType Junction -Path (Join-Path $skillsDir 'ml-research') -Target $skill
-```
-
-В macOS и Linux из корня репозитория:
+From your project directory, run the following command and select your agent when prompted. Add `-g` for a user-wide install. [Skills CLI](https://github.com/vercel-labs/skills#install-a-skill)
 
 ```sh
-mkdir -p ~/.agents/skills
-ln -s "$PWD/skills/ml-research" ~/.agents/skills/ml-research
+npx skills add kok-o/ml-research-kit --skill ml-research
 ```
 
-Пользовательская установка доступна во всех рабочих копиях. После `git pull`
-ссылка ведёт на обновлённые инструкции. Чтобы проверить автоматический выбор,
-откройте чат в Soup и задайте исследовательский вопрос обычным языком, например
-«Как сравнить два оптимизатора по времени до заданного validation loss?».
-Для явного вызова используйте `$ml-research`.
+For manual installation, copy or link the entire [ml-research directory](skills/ml-research/) into the skills directory your agent reads. Keep `SKILL.md`, `references/`, and `scripts/` together. The folder follows the [Agent Skills specification](https://agentskills.io/specification).
 
-## Antigravity
+## What it does
 
-Из корня репозитория:
+| Ask your agent | What to expect |
+| --- | --- |
+| “This paper reports a 2× speedup. Would it apply to our workload?” | Trace the claim to the original experiment, identify the baseline and hardware, and name the cheapest check for the biggest difference. |
+| “How should we compare two optimizers by time to target loss?” | Define the target, timing window, and decision thresholds before training. Test the scorer on two identical curves that reach the target early and then rebound. Both should show zero time saved. |
+| “Here are the raw runs. Is the change worth shipping?” | Check the scoring code against the measurements, report how much the result varies across runs, and say what decision the evidence supports. |
 
-```sh
-agy plugin validate --strict .
-agy plugin install .
-```
+## Optional tools
 
-Плагин также загружает правила из `rules/AGENTS.md`. После обновления checkout
-повторите установку, чтобы обновить копию Antigravity.
-
-## Проверка радара PR
-
-Радар использует Python 3.10+, Git с поддержкой `merge-tree --write-tree`
-и авторизованный GitHub CLI. Он проверяет конфликты с `origin/main` и открытые
-PR, которые затрагивают указанные пути. Пример из корня этого репозитория:
+The paper-review and experiment-planning workflows can run from the skill text alone. For work in a shared GitHub repository, the bundled **PR radar** checks which open pull requests touch your target files and which paths conflict with `origin/main`. It uses Python 3.10+, Git with `merge-tree --write-tree` support, and an authenticated GitHub CLI. Run it from this checkout:
 
 ```sh
 python skills/ml-research/scripts/team_radar.py --repo /path/to/worktree --paths src/train.py --fetch
+```
+
+For Antigravity users who also want the bundled repository rules, run `agy plugin install .` from this checkout. The skill itself lives entirely in [skills/ml-research](skills/ml-research/).
+
+## Test
+
+```sh
 python -m unittest discover -s tests -v
 ```
